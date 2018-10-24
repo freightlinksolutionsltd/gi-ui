@@ -21458,25 +21458,6 @@ angular.module('ngProgress', ['ngProgress.directive', 'ngProgress.provider']);
 
 angular.module('gi.ui', ['gi.util', 'textAngular', 'ui.sortable', 'ngProgress', 'ui.select', 'ui.bootstrap', 'ui.tree', 'angularSpinner', 'ngFileUpload']);
 
-angular.module('gi.ui').filter('giShorten', [
-  function() {
-    return function(str,
-  len) {
-      var result;
-      result = '';
-      if (str != null) {
-        if (str.length > len) {
-          result = str.substring(0,
-  len) + '...';
-        } else {
-          result = str;
-        }
-      }
-      return result;
-    };
-  }
-]);
-
 angular.module('gi.ui').directive('giDtproperty', [
   '$compile',
   '$timeout',
@@ -23136,6 +23117,25 @@ angular.module('gi.ui').factory('giTextAngular', [
       setOptions: function(opt) {
         return options = opt;
       }
+    };
+  }
+]);
+
+angular.module('gi.ui').filter('giShorten', [
+  function() {
+    return function(str,
+  len) {
+      var result;
+      result = '';
+      if (str != null) {
+        if (str.length > len) {
+          result = str.substring(0,
+  len) + '...';
+        } else {
+          result = str;
+        }
+      }
+      return result;
     };
   }
 ]);
