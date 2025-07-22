@@ -10,7 +10,9 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "natives": "^1.1.6"
+  },
   "devDependencies": {
     "coffeescript": "^2.3.2",
     "del": "^3.0.0",

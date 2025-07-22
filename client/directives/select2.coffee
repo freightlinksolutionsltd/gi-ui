@@ -1,12 +1,18 @@
 angular.module('gi.ui').directive 'giSelect2'
-, [ '$timeout'
-, ($timeout) ->
+, [ '$timeout', '$rootScope'
+, ($timeout, $rootScope) ->
   restrict: 'E'
   templateUrl: 'gi.ui.select2.html'
   scope:
     selection: '='
     options: '='
   link: (scope, elm, attrs, controller) ->
+    initSelect2 = ->      
+      elm.select2 opts
+      if scope.selection
+        elm.select2 'data', scope.selection
+        if attrs.debug?
+          console.log 'select2 initialized with data:', scope.selection
     escapeMarkup = (markup) ->
       replace_map =
         '\\': '&#92;'
@@ -77,7 +83,7 @@ angular.module('gi.ui').directive 'giSelect2'
         elm.select2 'enable'
 
 
-    elm.bind "change", () ->
+    elm.off("change").on "change", () ->
       if attrs.debug?
         console.log 'in elem change 1'
       scope.$apply () ->
@@ -94,7 +100,13 @@ angular.module('gi.ui').directive 'giSelect2'
         console.log newVal
         console.log 'old:'
         console.log oldVal
-      elm.select2 'data', newVal
+      
+      if newVal
+        elm.select2 'data', newVal
+        $timeout ->
+          if attrs.debug?
+            console.log 'selection updated via $timeout'
+        , 0
 
 
     scope.$watch 'options', (newVal) ->
@@ -109,7 +121,17 @@ angular.module('gi.ui').directive 'giSelect2'
           $timeout () ->
             elm.select2 opts
 
-    $timeout () ->
-      elm.select2 opts
+    $timeout ->
+      initSelect2()
+    
+    viewRefreshHandler = $rootScope.$on '$viewContentLoaded', ->
+      $timeout ->
+        if attrs.debug?
+          console.log 'view content loaded, reinitializing select2'
+        initSelect2()
+      , 100
+    
+    scope.$on '$destroy', ->
+      viewRefreshHandler()
 
 ]
