@@ -16,7 +16,7 @@
   "devDependencies": {
     "coffeescript": "^2.3.2",
     "del": "^3.0.0",
-    "gulp": "^3.8.11",
+    "gulp": "^5.0.1",
     "gulp-angular-templatecache": "^2.2.2",
     "gulp-coffee": "^3.0.2",
     "gulp-coffeelint": "^0.6.0",
